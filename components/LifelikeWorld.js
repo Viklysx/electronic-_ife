@@ -15,7 +15,7 @@ actionTypes.grow = function (critter) { // рост энергии сущест�
 };
 
 actionTypes.move = function (critter, vector, action) {
-    var dest = this.checkDestination(action, vector);
+    var dest = this.checkDestination(action, vector);// предоставляет ли действие допустимое направление
     if (dest == null || // если ячейка пустая или энергии недостаточно
         critter.energy <= 1 ||
         this.grid.get(dest) != null) { // элемент не равен null
@@ -31,7 +31,7 @@ actionTypes.move = function (critter, vector, action) {
 actionTypes.eat = function (critter, vector, action) {
     var dest = this.checkDestination(action, vector);
     var atDest = dest != null && this.grid.get(dest);
-    if (!atDest || atDest.energy == null) { // если клетка не пустая и энергия равна null 
+    if (!atDest || atDest.energy == null) { // если клетка не пустая или энергия равна null 
         return false;
     };
 
@@ -41,7 +41,7 @@ actionTypes.eat = function (critter, vector, action) {
 };
 
 actionTypes.reproduce = function (critter, vector, action) {
-    var baby = elementFromChar(this.legend, critter.originChar); 
+    var baby = elementFromChar(this.legend, critter.originChar); // создаём гипотетического отпрыска, используя elementFromChar на оригинальном существ
     var dest = this.checkDestination(action, vector);
     if (dest == null ||
         critter.energy <= 2 * baby.energy ||
@@ -51,16 +51,16 @@ actionTypes.reproduce = function (critter, vector, action) {
         
     critter.energy -= 2 * baby.energy; // для размножения нужно вдвое больше энергии
     this.grid.set(dest, baby); //отпрыск помещается на сетку
-    return true;
+    return true;//Если всё в порядке, отпрыск помещается на сетку (и перестаёт быть гипотетическим), а энергия тратится.
 };
 
 LifelikeWorld.prototype.letAct = function (critter, vector) {
     var action = critter.act(new View(this, vector));
     var handled = action &&
         action.type in actionTypes &&
-        actionTypes[action.type].call(this, critter, vector, action);
+        actionTypes[action.type].call(this, critter, vector, action); // call, чтобы дать функции доступ к мировому объекту через this.
 
-    if (!handled) {
+    if (!handled) {// Если действие по какой-либо причине не сработало, действием по умолчанию для существа будет ожидание. Он теряет 0.2 единицы энергии, а когда его уровень энергии падает ниже нуля, он умирает и исчезает с сетки.
         critter.energy -= 0.2;
         if (critter.energy <= 0) {
             this.grid.set(vector, null);

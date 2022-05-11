@@ -16,7 +16,7 @@ Tiger.prototype.act = function (context) {
     }
 
     var prey = context.findAll("O"); // массив доступных направлений по этому символу (травоядные)
-    if (prey.length && this.energy < 80) {
+    if (prey.length && this.energy < 100) {
         return {
             type: "eat",
             direction: randomElement(prey)

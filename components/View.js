@@ -11,7 +11,7 @@ View.prototype.look = function (dir) { //вычисляет координаты
     if (this.world.grid.isInside(target)) {// проверяем, находится ли вектор в пределах сетки
         return charFromElement(this.world.grid.get(target)); // извлекаем символ
     } else {
-        return "#";
+        return "#"; // Для координат снаружи сетки look просто притворяется, что там стен
     }
 };
 

@@ -30,7 +30,7 @@ World.prototype.toString = function () { //Метод строит карту в
 };
 
 World.prototype.letAct = function (critter, vector) { // получаем существо и вектор - текущее расположение
-    var action = critter.act(new View(this, vector));// View - функциональный констр-р, который будет определять, в каком месте находится объект и можем ли сделать шаг
+    var action = critter.act(new View(this, vector));// View - функциональный констр-р, который будет определять, в каком месте находится объект и можем ли сделать шаг. Метод act возвращает какое-либо действие.
     if (action && action.type == "move") {
         var dest = this.checkDestination(action, vector);
         if (dest && this.grid.get(dest) == null) {
