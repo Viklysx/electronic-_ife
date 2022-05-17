@@ -1,14 +1,7 @@
-import World from "./World.js";
-import View from "./View.js";
-import {elementFromChar} from "../utils.js";
+import elementFromChar from '../utils/elementFromChar.js';
 
-export default function LifelikeWorld(map, legend) {
-    World.call(this, map, legend);
-}
+export var actionTypes = Object.create(null);
 
-LifelikeWorld.prototype = Object.create(World.prototype); // прототип основан на прототипе World
-
-var actionTypes = Object.create(null);
 actionTypes.grow = function (critter) { // рост энергии существа
     critter.energy += 0.5;
     return true;
@@ -52,18 +45,4 @@ actionTypes.reproduce = function (critter, vector, action) {
     critter.energy -= 2 * baby.energy; // для размножения нужно вдвое больше энергии
     this.grid.set(dest, baby); //отпрыск помещается на сетку
     return true;//Если всё в порядке, отпрыск помещается на сетку (и перестаёт быть гипотетическим), а энергия тратится.
-};
-
-LifelikeWorld.prototype.letAct = function (critter, vector) {
-    var action = critter.act(new View(this, vector));
-    var handled = action &&
-        action.type in actionTypes &&
-        actionTypes[action.type].call(this, critter, vector, action); // call, чтобы дать функции доступ к мировому объекту через this.
-
-    if (!handled) {// Если действие по какой-либо причине не сработало, действием по умолчанию для существа будет ожидание. Он теряет 0.2 единицы энергии, а когда его уровень энергии падает ниже нуля, он умирает и исчезает с сетки.
-        critter.energy -= 0.2;
-        if (critter.energy <= 0) {
-            this.grid.set(vector, null);
-        }
-    }
 };

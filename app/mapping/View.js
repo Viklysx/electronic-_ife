@@ -1,5 +1,6 @@
-import {directions} from "../directions.js";
-import {charFromElement, randomElement} from "../utils.js";
+import { directions } from './../utils/directions.js';
+import charFromElement from './../utils/charFromElement.js';
+import randomElement from './../utils/randomElement.js';
 
 export default function View(world, vector) {// world - бьъект мира, vector - позиция существа в пространстве
     this.world = world;
@@ -11,7 +12,7 @@ View.prototype.look = function (dir) { //вычисляет координаты
     if (this.world.grid.isInside(target)) {// проверяем, находится ли вектор в пределах сетки
         return charFromElement(this.world.grid.get(target)); // извлекаем символ
     } else {
-        return "#"; // Для координат снаружи сетки look просто притворяется, что там стен
+        return "#"; // Для координат снаружи сетки
     }
 };
 

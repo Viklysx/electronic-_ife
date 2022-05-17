@@ -1,5 +1,5 @@
-import {randomElement} from "../utils.js";
-import {directions} from "../directions.js";
+import { directions } from './../utils/directions.js';
+import randomElement from './../utils/randomElement.js';
 
 export default function SmartPlantEater() {
     this.energy = 20;
@@ -14,9 +14,9 @@ SmartPlantEater.prototype.act = function (context) {
             direction: space
         };
     }
-        
+         
     var plants = context.findAll("*"); // ищем все растения рядом
-    if (plants.length) {
+    if (plants.length > 1) {
         return {
             type: "eat",
             direction: randomElement(plants)
@@ -24,7 +24,7 @@ SmartPlantEater.prototype.act = function (context) {
     }
 
     if (context.look(this.direction) != " ") {
-        this.direction = context.find(" ") || "s";
+        this.direction = space;
     }
         
     if (space) {

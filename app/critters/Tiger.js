@@ -1,5 +1,5 @@
-import {directions} from "../directions.js";
-import {randomElement} from "../utils.js";
+import { directions } from './../utils/directions.js';
+import randomElement from './../utils/randomElement.js';
 
 export default function Tiger() {
     this.energy = 100; // энергия
@@ -15,16 +15,16 @@ Tiger.prototype.act = function (context) {
         };
     }
 
-    var prey = context.findAll("O"); // массив доступных направлений по этому символу (травоядные)
-    if (prey.length && this.energy < 100) {
+    var victim = context.findAll("O"); // массив доступных направлений по этому символу (травоядные)
+    if (victim.length > 1 && this.energy < 100) {
         return {
             type: "eat",
-            direction: randomElement(prey)
+            direction: randomElement(victim)
         };
     }
 
     if (context.look(this.direction) != " ") {
-        this.direction = context.find(" ") || "s";
+        this.direction = space;
     }
 
     if (space) {

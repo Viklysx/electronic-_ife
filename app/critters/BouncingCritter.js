@@ -1,5 +1,5 @@
-import {directions} from "../directions.js";
-import {randomElement} from "../utils.js";
+import { directions } from './../utils/directions.js';
+import randomElement from './../utils/randomElement.js';
 
 export default function BouncingCritter() {
     this.direction = randomElement(Object.keys(directions));

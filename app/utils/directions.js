@@ -1,4 +1,4 @@
-import Vector from "./components/Vector.js";
+import Vector from '../mapping/Vector.js';
 
 export const directions = { // направления
     "n": new Vector(0, -1), // север

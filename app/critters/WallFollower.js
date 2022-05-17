@@ -1,4 +1,4 @@
-import {dirPlus} from "../utils.js";
+import {dirPlus} from '../utils/charFromElement.js';
 
 export default function WallFollower() {
     this.dir = "s"; // задаем первоначальное направление на юг
